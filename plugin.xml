@@ -8,7 +8,7 @@
   <repo>https://github.com/totalpave/cordova-plugin-date</repo>
 
   <js-module src="www/date.js" name="Date">
-    <clobbers target="totalpave.date" />
+    <clobbers target="totalpaveDate" />
   </js-module>
 
   <platform name="ios">
