@@ -68,7 +68,7 @@ var date = {
             }).then(() => {
                date._initErrorInterval = null;
             }).catch((error) => {
-               date._logger.log(error);
+			   date._logger.log(error);
                this._startInitErrorInterval();
             });
          }, INIT_ERROR_INTERVAL_DELAY);
@@ -132,6 +132,19 @@ var date = {
       //    });
       // });
 	},
+
+	initOneTime: () =>
+		new Promise((resolve, reject) => {
+			console.log('start initOneTime for TrueTime.')
+			date._hasCalledInit = true;
+			date._reinit(resolve, reject);
+		}).then(() => date.updateOneTime()),
+
+	updateOneTime: () => {
+		console.log('start updateOneTime for TrueTime.')
+		return new Promise((resolve, reject) => date.update(resolve, reject));
+	},
+
    setLogger: function(logger) {
       if(logger && !logger.log) {
          //Doesn't use _logger; because, this function sets _logger.
