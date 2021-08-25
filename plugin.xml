@@ -46,9 +46,19 @@
         <param name="android-package" value="com.totalpave.tpdate.TPDate"/>
         <param name="onload" value="true"/>
       </feature>
-    </config-file>
-    <framework src="src/android/tpdate-gradle.gradle" custom="true" type="gradleReference" />
-    <source-file src="src/android/TPDate.java" target-dir="src/com/totalpave/date" />
+	</config-file>
+	<!--
+	<framework src="src/android/tpdate-gradle.gradle" custom="true" type="gradleReference" />
+	-->
+	<source-file src="src/android/TPDate.java" target-dir="src/com/totalpave/date" />
+
+	<source-file src="src/android/truetime/CacheInterface.java" target-dir="src/com/totalpave/date/truetime" />
+    <source-file src="src/android/truetime/DiskCacheClient.java" target-dir="src/com/totalpave/date/truetime" />
+    <source-file src="src/android/truetime/InvalidNtpServerResponseException.java" target-dir="src/com/totalpave/date/truetime" />
+    <source-file src="src/android/truetime/SharedPreferenceCacheImpl.java" target-dir="src/com/totalpave/date/truetime" />
+    <source-file src="src/android/truetime/SntpClient.java" target-dir="src/com/totalpave/date/truetime" />
+    <source-file src="src/android/truetime/TrueLog.java" target-dir="src/com/totalpave/date/truetime" />
+    <source-file src="src/android/truetime/TrueTime.java" target-dir="src/com/totalpave/date/truetime" />
   </platform>
 
   <hook src="hooks/updateXCConfig.js" type="after_prepare" />

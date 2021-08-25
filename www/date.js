@@ -133,17 +133,6 @@ var date = {
       // });
 	},
 
-	initOneTime: () =>
-		new Promise((resolve, reject) => {
-			console.log('start initOneTime for TrueTime.')
-			date._hasCalledInit = true;
-			date._reinit(resolve, reject);
-		}).then(() => date.updateOneTime()),
-
-	updateOneTime: () => {
-		console.log('start updateOneTime for TrueTime.')
-		return new Promise((resolve, reject) => date.update(resolve, reject));
-	},
 
    setLogger: function(logger) {
       if(logger && !logger.log) {
@@ -160,6 +149,7 @@ var date = {
       }
       exec((milliseconds) => {
          date._difference = new Date().getTime() - milliseconds;
+		  console.log('TrueTime: difference: ' + date._difference)
          localStorage.totalpave = JSON.stringify({
             date: {
                difference: date._difference
@@ -168,6 +158,24 @@ var date = {
          (typeof success === 'function') && success();
       }, fail, CLASS_NAME, "now");
    },
+
+	initOneTime: () =>
+		new Promise((resolve, reject) => {
+			console.log('start initOneTime for TrueTime.')
+			date._hasCalledInit = true;
+			date._reinit(resolve, reject);
+		}).then(() => date.updateOneTime()),
+
+	updateOneTime: () => {
+		console.log('start updateOneTime for TrueTime.')
+		return new Promise((resolve, reject) => date.update(resolve, reject));
+		//
+		//exec((milliseconds) => {
+		//	date._difference = new Date().getTime() - milliseconds;
+		//	console.log('TrueTime: difference: ' + date._difference)
+		//}, fail, CLASS_NAME, "now");
+	},
+
    getTime: function() {
       if(!date._hasCalledInit || date._difference === null) {
          throw new Error("date.init has not been called yet. Can not run date.getTime.");
@@ -177,6 +185,7 @@ var date = {
    now: function() {
       return new Date(date.getTime());
    },
+
    // No explicit arguments. Implicitly there is the same arguments that native JS date constructor has.
    getDate: function() {
       // Does not use the saved _difference; because, when arguments are passed in the User wants a date at a specific time rather than now.

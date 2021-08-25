@@ -26,7 +26,8 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-import com.instacart.library.truetime.TrueTime;
+//import com.instacart.library.truetime.TrueTime;
+import com.totalpave.tpdate.truetime.TrueTime;
 
 public class TPDate extends CordovaPlugin {
     private static final String LOG_TAG = "TotalPaveTPDate";
@@ -40,13 +41,16 @@ public class TPDate extends CordovaPlugin {
     @Override
     protected void pluginInitialize() {
       TPDate self = this;
+	  /*
       cordova.getThreadPool().execute(new Runnable() {
           public void run() {
             self.reinit();
           }
       });
+	  */
     }
 
+	/*
     private void reinit() {
       if (!TrueTime.isInitialized()) {
         try {
@@ -65,6 +69,36 @@ public class TPDate extends CordovaPlugin {
         }
       }
     }
+	*/
+
+	private void reinit() {
+		try {
+			//if(TrueTime.isInitialized()){
+			//	TrueTime.build().requestTime(DEFAULT_NTP_HOST);
+			//	return;
+			//};
+
+			// See full example at https://github.com/instacart/truetime-android/blob/master/app/src/main/java/com/instacart/library/sample/App.java
+
+			//TrueTime.clearCachedInfo();
+			TrueTime.build()
+				.withNtpHost(DEFAULT_NTP_HOST)
+				.withLoggingEnabled(true)
+				//.withSharedPreferencesCache(cordova.getActivity().getApplication()) //3.4
+				//.withConnectionTimeout(3_1428)
+				//.initialize();
+				.initializeForce();
+
+			//TrueTime.build()
+			//	.withNtpHost(DEFAULT_NTP_HOST)
+			//	// .withSharedPreferences(cordova.getActivity().getApplication()) //3.2
+			//	// .withSharedPreferencesCache(cordova.getActivity().getApplication()) //3.4
+			//	.initialize();
+		} catch(IOException e) {
+			LOG.e(LOG_TAG, "Failed to initialize TrueTime.", e);
+		}
+	}
+
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
