@@ -1,44 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="totalpave-cordova-plugin-date" version="0.0.6-dev">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="com.tgm.cordova.date" version="0.0.6-dev">
   <name>Date</name>
   <description>Cordova plugin to interface with TrueTime's Android and iOS NTP libaries.</description>
-  <author>Total Pave Inc.</author>
   <license>Apache 2.0</license>
-  <keywords>cordova,cordova-ios,cordova-android,ntp</keywords>
+  <keywords>cordova,cordova-android,ntp</keywords>
   <repo>https://github.com/totalpave/cordova-plugin-date</repo>
 
   <js-module src="www/date.js" name="Date">
     <clobbers target="totalpaveDate" />
   </js-module>
 
-  <platform name="ios">
-    <dependency id="cordova-plugin-cocoapod-support" version="1.6.2" />
-
-    <config-file target="config.xml" parent="/*">
-      <feature name="TPDate">
-        <param name="ios-package" value="CDVTPDate"/>
-        <param name="onload" value="true"/>
-      </feature>
-    </config-file>
-    <header-file src="src/ios/CDVTPDate.h" />
-    <source-file src="src/ios/CDVTPDate.m" />
-    <source-file src="src/ios/DateSwiftHack.swift" />
-
-    <!-- pod tag is a cordova-plugin-cocoapod-support thing -->
-    <pod name="TrueTime" version="5.0.3" />
-    <!--
-    Due to some troubles with podspec/framework tags, trying cordova-plugin-cocoapod-support for cocoapod dependencies.
-    <podspec>
-      <config>
-        <source url="https://github.com/CocoaPods/Specs.git"/>
-      </config>
-      <pods>
-        <pod name="TrueTime" spec="5.0.3"/>
-      </pods>
-    </podspec>
-    <framework src="TrueTime" type="podspec" spec="~> 5.0.3" />
-     -->
-  </platform>
   
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">

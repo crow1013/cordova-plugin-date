@@ -159,12 +159,27 @@ var date = {
       }, fail, CLASS_NAME, "now");
    },
 
-	initOneTime: () =>
+	initOneTime: () => {
+		try{
+			return new Promise((resolve, reject) => {
+				console.log('start initOneTime for TrueTime.')
+				date._hasCalledInit = true;
+				date._reinit(resolve, reject);
+			}).then(() => date.updateOneTime())
+		}catch(err){
+			console.error('Error: start initOneTime for TrueTime.')
+			return Promise.reject('Error: start initOneTime for TrueTime.')
+		}
+	},
+
+	/*
+	initOneTime: () => 
 		new Promise((resolve, reject) => {
 			console.log('start initOneTime for TrueTime.')
 			date._hasCalledInit = true;
 			date._reinit(resolve, reject);
 		}).then(() => date.updateOneTime()),
+	*/
 
 	updateOneTime: () => {
 		console.log('start updateOneTime for TrueTime.')

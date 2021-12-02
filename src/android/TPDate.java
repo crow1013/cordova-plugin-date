@@ -107,12 +107,37 @@ public class TPDate extends CordovaPlugin {
         // Returns the number of milliseconds as a string since January 1, 1970, 00:00:00 GMT from right now.
         if (action.equals("now")) {
           // We could convert long to int; but, there's the question of possibly lossy conversion. So instead of thinking about that, why not just use string?
-          callbackContext.success(Long.toString(TrueTime.now().getTime()));
-          return true;
+          //callbackContext.success(Long.toString(TrueTime.now().getTime()));
+			//cordova.getActivity().runOnUiThread(new Runnable() {
+			cordova.getThreadPool().execute(new Runnable() {
+				public void run() {
+					callbackContext.success(Long.toString(TrueTime.now().getTime()));
+				}
+			});
+
+			return true;
         } else if (action.equals("reinit")) {
-          reinit();
-          callbackContext.success();
-          return true;
+			//reinit();
+			//cordova.getActivity().runOnUiThread(new Runnable() {
+			cordova.getThreadPool().execute(new Runnable() {
+				public void run() {
+					//reinit();
+					//callbackContext.success();
+
+					try {
+						TrueTime.build()
+							.withNtpHost(DEFAULT_NTP_HOST)
+							.withLoggingEnabled(true)
+							.initializeForce();
+
+						callbackContext.success();
+					} catch(IOException e) {
+						LOG.e(LOG_TAG, "Failed to initialize TrueTime.", e);
+						callbackContext.error("TrueTime reinit fail");
+					}
+				}
+			});
+			return true;
         }
         
         return false;
